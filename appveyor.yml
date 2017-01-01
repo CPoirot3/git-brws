@@ -11,6 +11,9 @@ install:
   - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
   - rustc -V
   - cargo -V
+  - git --version
+  - git checkout %APPVEYOR_REPO_BRANCH%
+  - git rev-parse HEAD
 
 build: false
 
