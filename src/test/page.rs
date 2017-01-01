@@ -30,9 +30,9 @@ fn parse_empty_args() {
 #[test]
 fn parse_file_or_dir() {
     for &(entry, relative) in &[
-        ("./README.md", "README.md"),
+        (Path::new(".").join("README.md").to_str().unwrap(), "README.md"),
         ("src", "src"),
-        ("./src/main.rs", "src/main.rs"),
+        (Path::new(".").join("src/main.rs").to_str().unwrap(), "src/main.rs"),
     ] {
         let c = config("https://github.com/user/repo.git", None, vec![&entry]);
         match parse_page(&c).unwrap() {
@@ -48,8 +48,8 @@ fn parse_file_or_dir() {
 #[test]
 fn parse_file_line() {
     for &(file, expected) in &[
-        ("./README.md#21", Some(21)),
-        ("./src/main.rs#10", Some(10)),
+        (Path::new(".").join("README.md#L21").to_str().unwrap(), Some(21)),
+        (Path::new(".").join("src").join("main.rs#10").to_str().unwrap(), Some(10)),
         ("LICENSE.txt", None),
     ] {
         let c = config("https://github.com/user/repo.git", None, vec![&file]);
